@@ -1,0 +1,28 @@
+# Ignore object and binary files
+*.o
+*.obj
+*.exe
+*.out
+
+# Ignore build directories
+build/
+dist/
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+*.tmp
+*.swp
+*.swo
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore C++ specific folders
+.vscode/
+.idea/
+
+# Ignore personal IDE configuration
+*.code-workspace
