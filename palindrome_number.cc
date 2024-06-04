@@ -18,7 +18,7 @@ int main(){
     }else{
         cout<<"Number is not pallindrom: "<<temp;
     }
-
+ 
 
     return 0;
 
