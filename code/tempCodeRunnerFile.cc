@@ -1,1 +1,1 @@
-// Find the GCD
+deleteFromBeginning
