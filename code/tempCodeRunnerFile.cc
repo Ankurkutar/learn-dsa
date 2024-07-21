@@ -1,1 +1,1 @@
-deleteFromBeginning
+mergeSort

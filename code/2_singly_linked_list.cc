@@ -29,14 +29,20 @@ void showList();
 // for reverse list
 void reverseList();
 
+
 // additional functions
 void getLength();
 void findMiddle();
 
 
 void detectCycle();
+void detectCycleStart();
 void removeCycle();
+
 void sortList();
+Node* merge(Node*, Node*);
+Node* getMiddle(Node*);
+Node* mergeSort(Node*);
 // void mergeSortedLists(Node* list1, Node* list2);
 
 int main()
@@ -61,7 +67,11 @@ int main()
         cout << "11. Get Length of Linked List\n";
         cout << "12. Get Middle Node\n";
         cout << "13. Detect Cycle in Linked List\n";
-        cout << "16. Exit\n";
+        cout << "14. Detect Cycle From Start Node\n";
+        cout << "15. Remove Cycle\n";
+        cout << "16. Reverse Linked List\n";
+        cout << "17. Sort Linked List\n";
+        cout << "18. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -106,7 +116,19 @@ int main()
         case 13:
             detectCycle();
             break;
+        case 14:
+            detectCycleStart();
+            break;
+        case 15:
+            removeCycle();
+            break;
         case 16:
+            reverseList();
+            break;
+        case 17:
+            sortList();
+            break;
+        case 18:
             exit(0);
             break;
         default:
@@ -497,3 +519,144 @@ void detectCycle(){
     cout << "No cycle detected" << endl;
     
 }
+
+void detectCycleStart() {
+    if (head == nullptr) {
+        cout << "Linked List Empty!" << endl;
+        return;
+    }
+
+    Node *slow = head;
+    Node *fast = head;
+
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast) {
+            slow = head;
+            while (slow != fast) {
+                slow = slow->next;
+                fast = fast->next;
+            }
+
+            cout << "Cycle starts at node with data: " << slow->data << endl;
+            return; // Cycle detected and start node found, so return
+        }
+    }
+
+    cout << "No cycle detected" << endl;
+}
+
+
+void removeCycle() {
+    if (head == nullptr) {
+        cout << "Linked List Empty!" << endl;
+        return;
+    }
+
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast) {
+            break; // Cycle detected
+        }
+    }
+
+    if (slow == fast) { // Cycle exists
+        slow = head;
+        while (slow->next != fast->next) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        fast->next = nullptr; // Break the cycle
+    }
+}
+
+
+void reverseList(){
+
+    if(head == nullptr){
+        cout << "Linked List Empty!" << endl;
+        return;
+    }
+
+    Node *currentNode = head;
+    Node *prevNode = nullptr;
+
+    while(currentNode != nullptr){
+        Node *temp = currentNode->next;
+        currentNode->next = prevNode;
+
+        prevNode = currentNode;
+        currentNode = temp;
+
+    }
+
+    head = prevNode;
+    cout << "Linked List Reversed!" << endl;
+
+}
+
+void sortList() {
+    if (head == nullptr) {
+        cout << "Linked List Empty!" << endl;
+        return;
+    }
+    head = mergeSort(head);
+    cout << "Linked List Sorted!" << endl;
+    showList();
+}
+
+Node* mergeSort(Node* head) {
+    if (head == nullptr || head->next == nullptr) {
+        return head;
+    }
+
+    Node* middle = getMiddle(head);
+    Node* left = head;
+    Node* right = middle->next;
+    middle->next = nullptr;
+
+    left = mergeSort(left);
+    right = mergeSort(right);
+
+    Node* result = merge(left, right);
+    return result;
+}
+
+Node* merge(Node* left, Node* right) {
+    if (left == nullptr) return right;
+    if (right == nullptr) return left;
+
+    Node* result = nullptr;
+
+    if (left->data <= right->data) {
+        result = left;
+        result->next = merge(left->next, right);
+    } else {
+        result = right;
+        result->next = merge(left, right->next);
+    }
+
+    return result;
+}
+
+Node* getMiddle(Node* head) {
+    if (head == nullptr) return head;
+
+    Node* slow = head;
+    Node* fast = head->next;
+
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+
+
