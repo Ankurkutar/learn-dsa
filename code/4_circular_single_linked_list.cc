@@ -202,7 +202,78 @@ class SingleCircularList
                 cout << "Circular Linked List is empty." << endl;
                 return;
             }
+
+            int position;
+            cout<<"Enter Position which element do you want to delete: ";
+            cin>>position;
+
+            Node* temp, *ptr = head;
+            if(position == 1 && head->next == head){
+                temp = head;
+                head = nullptr;
+                cout<<"Element deleted: "<<temp->data;
+                delete temp;
+                return;
+            }
+
+            if(position == 1 && head->next != head){
+                temp = head;
+                ptr = head;
+                while (ptr->next != head)
+                {
+                    ptr = ptr->next;
+                }
+
+                head = head->next;
+                ptr->next = head;
+                cout<<"Element deleted: "<<temp->data;
+                delete temp;
+                return;
+                
+            }
+
+            for(int i=1; i<position-1; i++){
+                ptr = ptr->next;
+                if(ptr->next == head){
+                    cout<<"Circular Linked List out of range: ";
+                    return;
+                }
+            }
+
+            
+            temp = ptr->next;
+            ptr->next = ptr->next->next;
+            cout<<"Node deleted: "<<temp->data<<endl;
+            delete temp;
+            return;
+            
         }
+
+        void deleteAtMid(){
+            if(head == nullptr){
+                cout << "Circular Linked List is empty." << endl;
+                return;
+            }
+
+            if (head->next == head || head->next->next == head) {
+                // If there's only one or two nodes in the list
+                cout << "No mid node in the list." << endl;
+                return;
+            }
+
+            Node *slow = head, *fast = head, *prev = nullptr;
+
+            do {
+                prev = slow;
+                slow = slow->next;
+                fast = fast->next->next;
+            }while (fast != head && fast->next != head);
+
+            prev->next = slow->next;
+            cout << "Node Deleted: " << slow->data << endl;
+            delete slow;
+        }
+
 
         void showList()
         {
@@ -220,41 +291,120 @@ class SingleCircularList
             cout<<endl;
         }
 
+        void searchElement(int data){
+            if(head == nullptr){
+                cout << "List is empty" << endl;
+                return;
+            }
+
+            Node* ptr = head;
+            int i = 0;
+            do{
+                i++;
+                if(data == ptr->data)
+                {
+                    cout<<"Element found "<<data<<" at position "<<i<<endl;
+                    return;
+                }
+                ptr = ptr->next;
+            }while(ptr != head);
+
+            cout<<"Element not found in the linked list:"<<endl;
+        }
+
+        void getLength(){
+            if(head == nullptr){
+                cout << "List is empty" << endl;
+                return;
+            }
+
+            Node* ptr = head;
+            int i = 0;
+            do{
+                i++;
+                ptr = ptr->next;
+            }while(ptr != head);
+
+            cout<<"Size of linked list is: "<<i<<endl;
+        }
+
+
+        void findMiddle(){
+            if(head == nullptr){
+                cout << "List is empty" << endl;
+                return;
+            }
+
+            if (head->next == head || head->next->next == head) {
+                // If there's only one or two nodes in the list
+                cout << "No Middle Node in the list." << endl;
+                return;
+            }
+
+            Node* slow = head, *fast = head;
+            do{
+                slow = slow->next;
+                fast = fast->next->next;
+            }while(fast != head && fast->next != head);
+
+            cout<<"Middle Node is: "<<slow->data<<endl;
+        }
+
+       void detectCycle(){
+            if(head == nullptr){
+                cout << "List is empty" << endl;
+                return;
+            }
+
+            Node *slow = head, *fast = head;
+            do {
+                slow = slow->next;
+                if (fast->next != head && fast->next->next != head) {
+                    fast = fast->next->next;
+                } else {
+                    cout << "Cycle Not Detected in the linked list" << endl;
+                    return;
+                }
+
+                if(slow == fast){
+                    cout << "Cycle detected in the linked list" << endl;
+                    return;
+                }
+            } while (fast != head && fast->next != head);
+
+            cout << "Cycle Not Detected in the linked list" << endl;
+        }
+
+        void reverseList() {
+            if (head == nullptr) {
+                cout << "List is empty" << endl;
+                return;
+            }
+
+            Node *currentNode = head;
+            Node *prevNode = nullptr;
+            Node *nextNode = nullptr;
+
+            do {
+                nextNode = currentNode->next; 
+                currentNode->next = prevNode; 
+                prevNode = currentNode;       
+                currentNode = nextNode;       
+            } while (currentNode != head);
+
+           
+            head->next = prevNode;
+            head = prevNode;       
+
+            cout << "Linked List reversed." << endl;
+            showList();
+        }
+
+
 
 };
 
-// for inserting
-// void insertAtBeginning();
-// void insertAtEnd();
-// void insertAtRandom();
-// void insertAtMid();
 
-// for deleting
-// void deleteFromBeginning();
-// void deleteFromEnd();
-// void deleteAfterPosition();
-// void deleteAtMid();
-
-// for searching
-// void searchElement();
-// void showList();
-
-// for reverse list
-// void reverseList();
-
-// additional functions
-// void getLength();
-// void findMiddle();
-
-// void detectCycle();
-// void detectCycleStart();
-// void removeCycle();
-
-// void sortList();
-// Node *merge(Node *, Node *);
-// Node *getMiddle(Node *);
-// Node *mergeSort(Node *);
-// void mergeSortedLists(Node* list1, Node* list2);
 
 int main()
 {
@@ -317,36 +467,38 @@ int main()
         case 6:
             ll.deleteFromEnd();
             break;
-        // case 7:
+        case 7:
             ll.deleteAfterPosition();
-        //     break;
-        // case 8:
-        //     deleteAtMid();
-        //     break;
+            break;
+        case 8:
+            ll.deleteAtMid();
+            break;
         case 9:
             ll.showList();
             break;
-        // case 10:
-        //     searchElement();
-        //     break;
-        // case 11:
-        //     getLength();
-        //     break;
-        // case 12:
-        //     findMiddle();
-        //     break;
-        // case 13:
-        //     detectCycle();
-        //     break;
+        case 10:
+            cout<<"Enter Element which you want search: ";
+            cin>>data;
+            ll.searchElement(data);
+            break;
+        case 11:
+            ll.getLength();
+            break;
+        case 12:
+            ll.findMiddle();
+            break;
+        case 13:
+            ll.detectCycle();
+            break;
         // case 14:
-        //     detectCycleStart();
+        //     ll.detectCycleStart();
         //     break;
         // case 15:
         //     removeCycle();
         //     break;
-        // case 16:
-        //     reverseList();
-        //     break;
+        case 16:
+            ll.reverseList();
+            break;
         // case 17:
         //     sortList();
         //     break;
