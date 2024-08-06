@@ -400,8 +400,6 @@ class SingleCircularList
             showList();
         }
 
-
-
 };
 
 
