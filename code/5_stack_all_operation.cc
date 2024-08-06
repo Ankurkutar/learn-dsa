@@ -113,6 +113,13 @@ public:
         return;
     }
 
+    void totalElement(){
+        if(isEmpty()){
+            cout<<"Stack is Empty: "<<endl;
+            return;
+        }
+        cout<<"Total element inside stack: "<<top+1;
+    }
     
 };
 
@@ -135,7 +142,8 @@ int main()
         cout << "7. Stack Total Size\n";
         cout << "8. Stack Current Size\n";
         cout << "9. Stack Print\n";
-        cout << "10. Exit\n";
+        cout << "10. Stack Total Element\n";
+        cout << "11. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -171,6 +179,9 @@ int main()
             s.print();
             break;
         case 10:
+            s.totalElement();
+            break;
+        case 11:
             exit(0);
             break;
         default:
