@@ -1,4 +1,5 @@
 #include<iostream>
+#include <unordered_set> 
 using namespace std;
 #define MAX 1000
 
@@ -139,9 +140,29 @@ class Queue{
                 cout<<"Element not found in the queue "<<endl;
             }
 
+        }
 
+        void duplicateElement() {
+            if (queueEmpty()) {
+                cout << "Queue is Empty." << endl;
+                return;
+            }
 
+            unordered_set<int> elementSet;  // Using a set to track seen elements
+            bool duplicateFound = false;
+            for(int i = front; i <= rear; i++){
+                if (elementSet.find(queue[i]) != elementSet.end()) {
+                    // Duplicate found
+                    cout << "Duplicate element found: " << queue[i] << endl;
+                    duplicateFound = true;
+                } else {
+                    elementSet.insert(queue[i]);
+                }
+            }
 
+            if (!duplicateFound) {
+                cout << "No duplicate elements in the queue." << endl;
+            }
         }
         
 };
@@ -166,7 +187,8 @@ int main()
         cout << "7. Queue is Full\n";
         cout << "8. Total Element in the Queue \n";
         cout << "9. Find Element in the Queue \n";
-        cout << "10. Exit\n";
+        cout << "10. Duplicate Element in the Queue \n";
+        cout << "11. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -202,6 +224,9 @@ int main()
             q.findElement();
             break;
         case 10:
+            q.duplicateElement();
+            break;
+        case 11:
             exit(0);
             break;
         default:
