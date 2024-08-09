@@ -113,13 +113,35 @@ class Queue{
             cout<<"first Element is: "<<queue[front];
         }
 
-        void duplicateElement(){
+        void findElement(){
             if(queueEmpty()){
                 cout<<"Queue is Empty: "<<endl;
                 return;
             }
 
-            
+            cout<<"Enter element which you want to search: ";
+            int ele;
+            cin>>ele;
+
+            int i = front;
+
+            bool flag = false;
+            for(i= front; i <= rear; i++){
+                if(queue[i] == ele){
+                    flag = true;
+                    break;;
+                }
+            }
+
+            if(flag){
+                cout<<"Element found at position: "<<i+1<<endl;
+            }else{
+                cout<<"Element not found in the queue "<<endl;
+            }
+
+
+
+
         }
         
 };
@@ -143,7 +165,7 @@ int main()
         cout << "6. Queue is Empty\n";
         cout << "7. Queue is Full\n";
         cout << "8. Total Element in the Queue \n";
-        cout << "9. Check duplicate Element in the Queue \n";
+        cout << "9. Find Element in the Queue \n";
         cout << "10. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
@@ -177,7 +199,7 @@ int main()
             q.queueElement();
             break;
         case 9:
-            q.duplicateElement();
+            q.findElement();
             break;
         case 10:
             exit(0);
