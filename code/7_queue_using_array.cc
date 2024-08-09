@@ -14,7 +14,8 @@ class Queue{
         }
 
         void enqueue(int data){
-            if(isFull()){
+            if(queueFull()){
+                cout<<"Queue is Overflow: "<<endl;
                 return;
             }
             if(front == -1 && rear == -1){
@@ -28,7 +29,8 @@ class Queue{
         }
 
         void dequeue(){
-            if(isEmpty()){
+            if(queueEmpty()){
+                cout<<"Queue is Underflow: "<<endl;
                 return;
             }
             if(front == rear){
@@ -41,14 +43,33 @@ class Queue{
         }
 
         void display(){
-            if(isEmpty()){
+            if(queueEmpty()){
+                cout<<"Queue is Underflow: "<<endl;
                 return;
             }
 
             cout<<"Element are: "<<endl;
-            for(int i =0; i<=rear; i++){
+            for(int i =front; i<=rear; i++){
                 cout<<queue[i]<<" ";
             }
+        }
+
+        void queueTopElement(){
+            if(queueEmpty()){
+                cout<<"Queue is Empty: "<<endl;
+                return;
+            }
+
+            cout<<"Last Element is: "<<queue[rear];
+        }
+
+        void queueElement(){
+            if(queueEmpty()){
+                cout<<"Queue is Empty: "<<endl;
+                return;
+            }
+
+            cout<<"Total Element in the Queue: "<<rear - front + 1<<endl;
         }
 
         bool isEmpty() {
@@ -82,6 +103,25 @@ class Queue{
                 return false;
             }
         }
+
+        void queueBottomElement(){
+            if(queueEmpty()){
+                cout<<"Queue is Empty: "<<endl;
+                return;
+            }
+
+            cout<<"first Element is: "<<queue[front];
+        }
+
+        void duplicateElement(){
+            if(queueEmpty()){
+                cout<<"Queue is Empty: "<<endl;
+                return;
+            }
+
+            
+        }
+        
 };
 
 
@@ -92,7 +132,7 @@ int main()
 
     while (1)
     {
-         cout << "\n\n********* Queue Operations Menu *********\n";
+        cout << "\n\n********* Queue Operations Menu *********\n";
         cout << "Choose one option from the following list ...\n";
         cout << "===============================================\n";
         cout << "1. Enqueue\n";
@@ -102,7 +142,9 @@ int main()
         cout << "5. Rear Element\n";
         cout << "6. Queue is Empty\n";
         cout << "7. Queue is Full\n";
-        cout << "8. Exit\n";
+        cout << "8. Total Element in the Queue \n";
+        cout << "9. Check duplicate Element in the Queue \n";
+        cout << "10. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -119,28 +161,25 @@ int main()
         case 3:
             q.display();
             break;
-        // case 4:
-        //     s.stackBottomElemnt();
-        //     break;
-        // case 5:
-        //     s.stackEmpty();
-        //     break;
-        // case 6:
-        //     s.stackFull();
-        //     break;
-        // case 7:
-        //     s.stackSize();
-        //     break;
-        // case 8:
-        //     s.stackCurrentSize();
-        //     break;
-        // case 9:
-        //     s.print();
-        //     break;
-        // case 10:
-        //     s.totalElement();
-        //     break;
-        case 11:
+        case 4:
+            q.queueBottomElement();
+            break;
+        case 5:
+            q.queueTopElement();
+            break;
+        case 6:
+            q.isEmpty();
+            break;
+        case 7:
+            q.isFull();
+            break;
+        case 8:
+            q.queueElement();
+            break;
+        case 9:
+            q.duplicateElement();
+            break;
+        case 10:
             exit(0);
             break;
         default:

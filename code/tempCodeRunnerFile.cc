@@ -1,3 +1,3 @@
-case 10:
-            s.stackSize();
-            break;
+// case 4:
+        //     s.stackBottomElemnt();
+        //     bre
