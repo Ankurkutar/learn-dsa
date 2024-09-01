@@ -1,4 +1,4 @@
-// Insertion in binary tree
+// deletion in binary tree
 
 // #include<stdio.h>
 #include<iostream>
@@ -112,6 +112,38 @@ void insert(struct node* root, int data){
     cout<<"Node Inserted: "<<data<<endl;
 }
 
+struct node *inOrderPredecessor(struct node* root){
+    root = root->left;
+    while(root->right != NULL){
+        root = root->right;
+    }
+    return root;
+}
+
+// deletion in binary tree 
+struct node* deleteNode(struct node* root, int data){
+    struct node* iPre = NULL;
+    if(root == NULL){
+        return NULL;
+    }
+    if(root->left == NULL && root->right == NULL){
+        free(root);
+        return NULL;
+    }
+    // search node to be deleted
+    if(data < root->data){
+        root->left = deleteNode(root->left, data);
+    }else if(data > root->data){
+        root->left  = deleteNode(root->right, data);
+    }else{
+        iPre = inOrderPredecessor(root);
+        root->data = iPre->data;
+        root->left = deleteNode(root->left, iPre->data);
+    }
+
+    return root;
+}
+
 int main(){
      
     // Constructing the root node - Using Function (Recommended)
@@ -120,12 +152,7 @@ int main(){
     struct node *p2 = createNode(6);
     struct node *p3 = createNode(1);
     struct node *p4 = createNode(4);
-    // Finally The tree looks like this:
-    //      5
-    //     / \
-    //    3   6
-    //   / \
-    //  1   4  
+    
 
     // Linking the root node with left and right children
     p->left = p1;
@@ -134,15 +161,11 @@ int main(){
     p1->right = p4;
 
    
-    // inOrder(p);
-    // printf("\n");
- 
-   
-
-    insert(p, 7);
-    // insert(p, 6);
-    // cout<<p->right->right->data<<endl;
-    printf("%d", p->right->right->data);
-
+    inOrder(p);
+    
+    struct node *Deldata = deleteNode(p, 3);
+    // cout<endl;
+    cout<<"\ndeleted node is: "<<p->data<<endl;
+    inOrder(p);
     return 0;
 }
