@@ -128,6 +128,33 @@ Node* findMax(Node* root){
     return root; 
 }
 
+bool checkIfBSTHelper(Node* root, Node* minNode, Node* maxNode){
+    if(root == nullptr){
+        return true;
+    }
+
+    if((minNode != nullptr && root->data <= minNode->data) || (maxNode != nullptr && root->data >= maxNode->data)){
+        return false;
+    }
+
+    return checkIfBSTHelper(root->left, minNode, root) && checkIfBSTHelper(root->right, root, maxNode);
+}
+
+bool checkIfBST(Node* root){
+    return checkIfBSTHelper(root, nullptr, nullptr);
+}
+
+int getHeight(Node* root){
+    if(root == NULL){
+        return -1;
+    }
+
+    int leftHeight = getHeight(root->left);
+    int rightHeight = getHeight(root->right);
+
+    return max(leftHeight, rightHeight) + 1;
+}
+
 int main()
 {
     Node *root = NULL; 
@@ -155,7 +182,8 @@ int main()
         cout << "15. Delete Tree\n";
         cout << "16. Mirror Tree\n";
         cout << "17. Print All Paths\n";
-        cout << "18. Exit\n";
+        cout << "18. Display Tree in all Order\n";
+        cout << "19. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -184,9 +212,10 @@ int main()
             temp = findMax(root);
             cout << "Maximum Node is: " << temp->data;
             break;
-        // case 6:
-        //     getHeight();
-        //     break;
+        case 6:
+            // getHeight(root);
+            cout << "The height of the tree is: " << getHeight(root) << endl;
+            break;
         case 7:
             cout<<"Pre Order Traversal is: "<<endl;
             preOrderTraversal(root);
@@ -202,9 +231,13 @@ int main()
         // case 10:
         //     levelOrderTraversal();
         //     break;
-        // case 11:
-        //     checkIfBST();
-        //     break;
+        case 11:
+            if (checkIfBST(root)) {
+                cout << "The tree is a BST" << endl;
+            } else {
+                cout << "The tree is not a BST" << endl;
+            }
+            break;
         // case 12:
         //     findLowestCommonAncestor();
         //     break;
@@ -224,6 +257,14 @@ int main()
         //     printAllPaths();
         //     break;
         case 18:
+            cout<<"Pre Order Traversal is: "<<endl;
+            preOrderTraversal(root);
+            cout<<"\nIn Order Traversal is: "<<endl;
+            inOrderTraversal(root);
+            cout<<"\nPost Order Traversal is: "<<endl;
+            postOrderTraversal(root);
+            break;
+        case 19:
             exit(0);
             break;
         default:
