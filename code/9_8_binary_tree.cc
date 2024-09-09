@@ -155,11 +155,148 @@ int getHeight(Node* root){
     return max(leftHeight, rightHeight) + 1;
 }
 
+Node* searchNode(Node* root, int data){
+    if(root == nullptr || root->data == data){
+        return root;
+    }
+
+    if(data < root->data){
+        return searchNode(root->left, data);
+    }
+
+    return searchNode(root->right, data);
+}
+
+Node* findSuccessor(Node* root, Node* target){
+    if(target != nullptr){
+        return findMin(target->right);
+    }
+
+    Node* successor = nullptr;
+    Node* ancestor = root;
+
+    while (ancestor != nullptr){
+        if(target->data < ancestor->data){
+            successor = ancestor;
+            ancestor = ancestor->left;
+        }else if(target->data > ancestor->data){
+            ancestor = ancestor->right;
+        }else{
+            break;
+        }
+    }
+    return successor;
+}
+
+Node* findPredecessor(Node* root, Node* target){
+    if(target->left != nullptr){
+        return findMax(target->left);
+    }
+
+    Node* predecessor = nullptr;
+    Node* ancestor = root;
+
+    while (ancestor != nullptr)
+    {
+        if(target->data > ancestor->data){
+            predecessor = ancestor;
+            ancestor = ancestor->right;
+        }else if(target->data < ancestor->data){
+            ancestor = ancestor->left;
+        }else{
+            break;
+        }
+    }
+    return predecessor;
+    
+}
+
+void deleteTree(Node* root){
+    if(root == nullptr){
+        return;
+    }
+
+    deleteTree(root->left);
+    deleteTree(root->right);
+
+    cout << "Deleting node: " << root->data << endl;
+    delete root;
+}
+
+Node* deleteTargetNode(Node* root, int key){
+    if(root == nullptr){
+        return root;
+    }
+
+    if(key < root->data){
+        root->left = deleteTargetNode(root->left, key);
+    }else if(key > root->data){
+        root->right = deleteTargetNode(root->right, key);
+    }else{
+        // Node to be deleted is found
+
+        // Case 1: Node has no children (leaf node)
+        if(root->left == nullptr && root->right == nullptr){
+            // cout<<"Node deleted: "<<root->data<<endl;
+            delete root;
+            return nullptr;
+        }
+
+        // Case 2: Node has one child (either left or right)
+        if(root->left == nullptr){
+            Node* temp = root->right;
+            delete root;
+            return temp;
+        }else if(root->right == nullptr){
+            Node* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+        // Case 3: Node has two children
+        // Find the in-order successor (smallest in the right subtree)
+
+        Node* successor = findMin(root->right);
+        root->data = successor->data;
+
+        root->right = deleteTargetNode(root->right, successor->data);
+    }
+    return root;
+
+}
+
+void levelOrderTraversal(Node* root){
+    if(root == nullptr){
+        cout << "Tree is empty." << endl;
+        return;
+    }
+    cout<<"function not implemented...."<<endl;
+}
+
+Node* findLowestCommonAncestor(Node* root, int n1, int n2){
+    if(root == nullptr){
+        return root;
+    }
+
+    // If both values are smaller than root, LCA lies in the left subtree
+    if(n1 < root->data && n2 < root->data){
+        return findLowestCommonAncestor(root->left, n1, n2);
+    }
+
+    // If both values are greater than root, LCA lies in the right subtree
+    if(n1 > root->data && n2 > root->data){
+        return findLowestCommonAncestor(root->right, n1, n2);
+    }
+
+    // Otherwise, this node is the LCA
+    return root;
+}
+
 int main()
 {
     Node *root = NULL; 
     Node *temp = NULL; 
-    int choice, data;
+    int choice, data, n1, n2;
     while (1)
     {
         cout << "\n\n********* Binary Tree Operations Menu *********\n";
@@ -180,10 +317,11 @@ int main()
         cout << "13. Find Successor\n";
         cout << "14. Find Predecessor\n";
         cout << "15. Delete Tree\n";
-        cout << "16. Mirror Tree\n";
+        cout << "16. Delete Particular Node\n";
         cout << "17. Print All Paths\n";
         cout << "18. Display Tree in all Order\n";
-        cout << "19. Exit\n";
+        cout << "19. Mirror Tree\n";
+        cout << "20. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -228,9 +366,9 @@ int main()
             cout<<"Post Order Traversal is: "<<endl;
             postOrderTraversal(root);
             break;
-        // case 10:
-        //     levelOrderTraversal();
-        //     break;
+        case 10:
+            levelOrderTraversal(root);
+            break;
         case 11:
             if (checkIfBST(root)) {
                 cout << "The tree is a BST" << endl;
@@ -238,21 +376,65 @@ int main()
                 cout << "The tree is not a BST" << endl;
             }
             break;
-        // case 12:
-        //     findLowestCommonAncestor();
-        //     break;
-        // case 13:
-        //     findSuccessor();
-        //     break;
-        // case 14:
-        //     findPredecessor();
-        //     break;
-        // case 15:
-        //     deleteTree();
-        //     break;
-        // case 16:
-        //     mirrorTree();
-        //     break;
+        case 12:
+            cout << "Enter first value: ";
+            cin >> n1;
+            cout << "Enter second value: ";
+            cin >> n2;
+            temp = findLowestCommonAncestor(root, n1, n2);
+
+            if (temp != nullptr)
+                cout << "Lowest Common Ancestor of " << n1 << " and " << n2 << " is: " << temp->data << endl;
+            else
+                cout << "No common ancestor found." << endl;
+            break;
+        case 13:
+            cout << "Enter Element for which you want to find the successor: ";
+            cin >> data;
+
+            // Find the node with the given data
+            temp = searchNode(root, data);
+            if (temp == nullptr) {
+                cout << "Element not found in the tree!" << endl;
+                break;
+            }
+
+            // Find the successor of the found node
+            temp = findSuccessor(root, temp);  // Use temp to find the successor
+
+            if (temp != nullptr) {
+                cout << "The successor of " << data << " is: " << temp->data << endl;
+            } else {
+                cout << "No successor found for " << data << endl;
+            }
+            break;
+        case 14:
+            cout << "Enter Element for which you want to find the successor: ";
+            cin >> data;
+
+            // Find the node with the given data
+            temp = searchNode(root, data);
+            if (temp == nullptr) {
+                cout << "Element not found in the tree!" << endl;
+                break;
+            }
+            temp = findPredecessor(root, temp);
+            if (temp != nullptr) {
+                cout << "The Predecessor of " << data << " is: " << temp->data << endl;
+            } else {
+                cout << "No Predecessor found for " << data << endl;
+            }
+            break;
+        case 15:
+            deleteTree(root);
+            root = NULL;
+            break;
+        case 16:
+            cout << "Enter Element to delete: ";
+            cin >> data;
+            root = deleteTargetNode(root, data);
+            cout << "Node " << data << " deleted successfully." << endl;
+            break;
         // case 17:
         //     printAllPaths();
         //     break;
@@ -264,7 +446,10 @@ int main()
             cout<<"\nPost Order Traversal is: "<<endl;
             postOrderTraversal(root);
             break;
-        case 19:
+        // case 19:
+        //     mirrorTree();
+        //     break;
+        case 20:
             exit(0);
             break;
         default:
