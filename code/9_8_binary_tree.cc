@@ -292,6 +292,21 @@ Node* findLowestCommonAncestor(Node* root, int n1, int n2){
     return root;
 }
 
+void mirrorTree(Node* root){
+    if(root == nullptr){
+        return;
+    }
+
+    // Recursively mirror the left and right subtrees
+    mirrorTree(root->left);
+    mirrorTree(root->right);
+
+    // Swap the left and right child pointers
+    Node* temp = root->left;
+    root->left = root->right;
+    root->right = temp;
+}
+
 int main()
 {
     Node *root = NULL; 
@@ -446,9 +461,10 @@ int main()
             cout<<"\nPost Order Traversal is: "<<endl;
             postOrderTraversal(root);
             break;
-        // case 19:
-        //     mirrorTree();
-        //     break;
+        case 19:
+            mirrorTree(root);
+            inOrderTraversal(root);
+            break;
         case 20:
             exit(0);
             break;
