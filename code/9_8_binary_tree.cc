@@ -100,7 +100,7 @@ Node* deleteNode(Node* root, int data){
         root->right = deleteNode(root->right, temp->data);
     }
     return root;
-}
+} 
 
 void searchElement(Node* root, int data){
     if(root == NULL){
@@ -109,7 +109,7 @@ void searchElement(Node* root, int data){
     }
 
     if(data == root->data){
-        cout << "Element found: " << data << endl;
+       cout << "Element found: " << data << endl;
         return;
     }
     else if(data < root->data){
@@ -128,21 +128,25 @@ Node* findMax(Node* root){
     return root; 
 }
 
-bool checkIfBSTHelper(Node* root, Node* minNode, Node* maxNode){
-    if(root == nullptr){
+bool checkIfBSTHelper(Node* root, Node* minNode, Node* maxNode) {
+    if (root == NULL) {
         return true;
     }
 
-    if((minNode != nullptr && root->data <= minNode->data) || (maxNode != nullptr && root->data >= maxNode->data)){
-        return false;
+    // Corrected comparison
+    if ((minNode != nullptr && root->data <= minNode->data) || 
+        (maxNode != nullptr && root->data >= maxNode->data)) {
+        return false; // This should return false if the condition is violated
     }
 
-    return checkIfBSTHelper(root->left, minNode, root) && checkIfBSTHelper(root->right, root, maxNode);
+    return checkIfBSTHelper(root->left, minNode, root) && 
+           checkIfBSTHelper(root->right, root, maxNode);
 }
 
-bool checkIfBST(Node* root){
+bool checkIfBST(Node* root) {
     return checkIfBSTHelper(root, nullptr, nullptr);
 }
+
 
 int getHeight(Node* root){
     if(root == NULL){
