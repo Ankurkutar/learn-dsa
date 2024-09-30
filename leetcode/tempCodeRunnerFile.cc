@@ -1,3 +1,3 @@
-cout << "Postorder Traversal: ";
-    tree.postorderTraversal(tree.getRoot());
-    cout << endl;
+um: result){
+        cout<<num<<" ";
+    }
