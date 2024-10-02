@@ -1,5 +1,5 @@
-#include <iostream>
-#include <vector>
+#include<iostream>
+#include<vector>
 using namespace std;
 
 class Solution
@@ -41,36 +41,36 @@ public:
     }
 };
 
-// int main()
-// {
-//     Solution solution;
-//     int rowIndex = 5;
-//     vector<int> result = solution.getRow(rowIndex);
-
-//     for (int num : result)
-//     {
-//         cout << num << " ";
-//     }
-//     cout << endl;
-//     return 0;
-// }
-
-
-// for other way 
 int main()
 {
     Solution solution;
-    int numRows = 5;
+    int rowIndex = 5;
+    vector<int> result = solution.getRow(rowIndex);
 
-    // Get the specific row from Pascal's Triangle
-    vector<int> result = solution.generate(numRows); 
-
-    // Output the specific row of Pascal's Triangle
     for (int num : result)
     {
         cout << num << " ";
     }
     cout << endl;
-
     return 0;
 }
+
+
+// for other way 
+// int main()
+// {
+//     Solution solution;
+//     int numRows = 5;
+
+//     // Get the specific row from Pascal's Triangle
+//     vector<int> result = solution.generate(numRows); 
+
+//     // Output the specific row of Pascal's Triangle
+//     for (int num : result)
+//     {
+//         cout << num << " ";
+//     }
+//     cout << endl;
+
+//     return 0;
+// }
