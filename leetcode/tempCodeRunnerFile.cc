@@ -1,1 +1,3 @@
-singleNumberByBruteForce
+(countMap[num] > majorityCount){
+                    return num;
+                }
