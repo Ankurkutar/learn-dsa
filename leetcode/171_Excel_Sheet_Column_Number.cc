@@ -4,14 +4,14 @@ using namespace std;
 
 class Solution{
     public:
-        // int titleToNumber(string columnTitle){
-        //     int result = 0;
-        //     for(char c : columnTitle){
-        //         int value = c - 'A' + 1; // A here 65
-        //         result = result * 26 + value;
-        //     }
-        //     return result;
-        // }
+        /*int titleToNumber(string columnTitle){
+            int result = 0;
+            for(char c : columnTitle){
+                int value = c - 'A' + 1; // A here 65
+                result = result * 26 + value;
+            }
+            return result;
+        }*/
 
         int titleToNumber(string columnTitle){
             int result = 0;
