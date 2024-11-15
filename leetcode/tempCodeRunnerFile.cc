@@ -1,3 +1,4 @@
-for (int num : nums1) {
-        countMap[num]++;
+for(int score : record){
+        totalScore += score;
     }
+    retu
