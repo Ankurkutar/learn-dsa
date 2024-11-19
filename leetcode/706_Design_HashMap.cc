@@ -31,27 +31,56 @@ using namespace std;
 };*/
 
 // optimized approach 
-class MyHashMap{
-    public:
-        vector<list<pair<int, int>>>buckets;
-        int size = 10000;
+class MyHashMap {
+private:
+    vector<list<pair<int, int>>> buckets; // Buckets to store key-value pairs
+    int size; // Number of buckets
 
-        MyHashMap(){
-            buckets.resize(size);
+    int getIndex(int key) {
+        return key % size; // Hash function to get the bucket index
+    }
+
+    list<pair<int, int>>::iterator findKey(int key, int index) {
+        for (auto it = buckets[index].begin(); it != buckets[index].end(); ++it) {
+            if (it->first == key) {
+                return it; // Return iterator to the key-value pair
+            }
         }
+        return buckets[index].end(); // Return end iterator if not found
+    }
 
-        void put(int key, int value){
-            vec[key] = value;
+public:
+    MyHashMap() {
+        size = 10000; // Number of buckets
+        buckets.resize(size);
+    }
+
+    void put(int key, int value) {
+        int index = getIndex(key);
+        auto it = findKey(key, index);
+        if (it != buckets[index].end()) {
+            it->second = value; // Update the value if the key exists
+        } else {
+            buckets[index].emplace_back(key, value); // Add a new key-value pair
         }
+    }
 
-        int get(int key){
-            return vec[key];
+    int get(int key) {
+        int index = getIndex(key);
+        auto it = findKey(key, index);
+        if (it != buckets[index].end()) {
+            return it->second; // Return the value if the key exists
         }
+        return -1; // Return -1 if the key does not exist
+    }
 
-        void remove(int key){
-            vec[key] = -1;
+    void remove(int key) {
+        int index = getIndex(key);
+        auto it = findKey(key, index);
+        if (it != buckets[index].end()) {
+            buckets[index].erase(it); // Remove the key-value pair if found
         }
-
+    }
 };
 
 int main() {
