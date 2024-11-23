@@ -17,8 +17,8 @@ public:
         set<string>s;
         for(int i=0; i<words.size(); i++){
             string p = "";
-            for(int j=0; j<words[i].size(); ++j){
-                p += morseCodes[words[i][j] - 'a'];
+            for(int j=0; j<words[i].size(); ++j){ //j starting from 0 means every indexing value start from first character
+                p += morseCodes[words[i][j] - 'a']; // here is logic words[i][j] = words[1][0] means
                 
             }
            
