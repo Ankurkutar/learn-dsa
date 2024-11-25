@@ -44,8 +44,8 @@ bool wordPattern(string pattern, string s){
 
 int main() {
     string pattern = "abba";
-    // string s = "dog cat cat dog";
-    string s = "dog cat cat fish";
+    string s = "dog cat cat dog";
+    // string s = "dog cat cat fish";
 
     if (wordPattern(pattern, s)) {
         cout << "The pattern matches the string!" << endl;
