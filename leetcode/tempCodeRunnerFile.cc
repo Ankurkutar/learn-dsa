@@ -1,5 +1,6 @@
-if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' ||
-        ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U') {
-            return true;
-    }
-    return false;
+char findTheDifference(string s, string t){
+            char c = 0;
+            for(char ch : s) c ^= ch;
+            for(char ch : t) c ^= ch;
+            return c;
+        }
