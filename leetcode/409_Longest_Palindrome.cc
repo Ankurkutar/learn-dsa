@@ -35,7 +35,7 @@ int main() {
     Solution solution;
 
     // Test cases
-    string s1 = "abccccdd";
+    string s1 = "abccccdd";   zKIU89COIHXK,M            
     string s2 = "aabbccdde";
 
     cout << "Longest Palindrome length for \"" << s1 << "\": " 
